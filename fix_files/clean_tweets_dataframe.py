@@ -22,8 +22,6 @@ class Clean_Tweets:
         """
         drop duplicate rows
         """
-
-        
         df.drop_duplicates(inplace=True)
         return df
         
@@ -48,11 +46,30 @@ class Clean_Tweets:
         
         return df
     
-    def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
+    def handle_missing_values(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+            handle missing values
+        """
+
+        df['possibly_sensitive'] = df['possibly_sensitive'].fillna(0)
+        df['place'] = df['place'].fillna(" ")
+        df['hashtags'] = df['hashtags'].fillna(" ")
+        df['user_mentions'] = df['user_mentions'].fillna(" ")
+        df['retweet_count'] = df['retweet_count'].fillna(0)
+
+        return df
+
+    def remove_non_english_tweets(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         remove non english tweets from lang
         """
-        
-        df = ----
-        
+
+        df = df.drop(df[df['lang'] != 'en'].index)
+
         return df
+    
+if __name__ == "__main__":
+    _, tweet_list = edf.read_json("data/Economic_Twitter_Data.zip")
+    tweet = edf.TweetDfExtractor(tweet_list)
+    df = tweet.get_tweet_df(True)
+    ola = Clean_Tweets(df)
