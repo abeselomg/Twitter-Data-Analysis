@@ -14,9 +14,9 @@ def read_json(json_file: str)->list:
     -------
     length of the json file and a list of json
     """
-    
+    #manually unziped economic_twitter_data.zip and point to it
     tweets_data = []
-    for tweets in open(json_file,'r'):
+    for tweets in open("data/Economic_Twitter_Data.json",'r'):
         tweets_data.append(json.loads(tweets))
     
     
