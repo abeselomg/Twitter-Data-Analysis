@@ -90,12 +90,20 @@ class TweetDfExtractor:
         hashtags =[tweet.get("entities", {}).get("hashtags", None) for tweet in self.tweets_list]
         return hashtags
     def find_mentions(self)->list:
-        mentions = 
+        mentions = []
+        for hs in self.tweets_list:
+            mentions.append(", ".join(
+                [mention['screen_name'] for mention in hs['entities']['user_mentions']]))
+        return mentions
+    
+    def find_lang(self) -> list:
+        lang = [tweet["user"]["lang"] for tweet in self.tweets_list]
+        return lang
 
 
     def find_location(self)->list:
         try:
-            location = self.tweets_list['user']['location']
+            location = [self.tweets_list['user']['location']]
         except TypeError:
             location = ''
         
