@@ -1,4 +1,5 @@
 import json
+from venv import create
 import pandas as pd
 from textblob import TextBlob
 
@@ -42,11 +43,19 @@ class TweetDfExtractor:
         return text
     
     def find_sentiments(self, text)->list:
+        polarity = []
+        subjectivity = []
+        for tweet in text:
+            blob = TextBlob(tweet)
+            sentiment = blob.sentiment
+            polarity.append(sentiment.polarity)
+            subjectivity.append(sentiment.subjectivity)
         
         return polarity, self.subjectivity
 
     def find_created_time(self)->list:
-       
+        created_at = [time['created_at'] for time in self.tweets_list]
+        
         return created_at
 
     def find_source(self)->list:
